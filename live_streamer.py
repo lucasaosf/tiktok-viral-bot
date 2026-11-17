@@ -24,6 +24,23 @@ def get_font_param() -> str:
                 return f"fontfile='{p}'"
         return "font='Arial'"
 
+def ensure_lofi_music(music_path: str = "assets/lofi_bg.mp3") -> bool:
+    """Garante que a trilha sonora relaxante esteja presente no diretório assets."""
+    if os.path.exists(music_path):
+        return True
+    try:
+        import urllib.request
+        os.makedirs(os.path.dirname(music_path) or ".", exist_ok=True)
+        url = "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        print("🎵 Baixando trilha sonora Lofi sem direitos autorais para a live...")
+        with urllib.request.urlopen(req) as resp, open(music_path, "wb") as f:
+            f.write(resp.read())
+        return True
+    except Exception as e:
+        print(f"Aviso: Não foi possível obter trilha lofi online ({e}). Usando áudio gerado.")
+        return False
+
 def stream_to_tiktok_live(
     video_path: str,
     rtmp_url: str = DEFAULT_RTMP_URL,
@@ -39,6 +56,9 @@ def stream_to_tiktok_live(
     """
     if not os.path.exists(video_path):
         raise FileNotFoundError(f"Arquivo de vídeo não encontrado: {video_path}")
+
+    if music_path == "assets/lofi_bg.mp3":
+        ensure_lofi_music(music_path)
 
     if test_mode:
         print("\n🧪 [MODO DE TESTE] Testando codificação e pipeline de transmissão por 5 segundos...")
