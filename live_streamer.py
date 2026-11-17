@@ -28,13 +28,14 @@ def stream_to_tiktok_live(
     video_path: str,
     rtmp_url: str = DEFAULT_RTMP_URL,
     stream_key: str = DEFAULT_STREAM_KEY,
+    music_path: str = "assets/lofi_bg.mp3",
     with_overlay: bool = True,
     auto_reconnect: bool = True,
     test_mode: bool = False
 ):
     """
     Transmite um loop ininterrupto de vídeo (ex: gameplay de Roblox) 24/7 para o TikTok Live via RTMP.
-    Inclui banners visuais atraentes para converter espectadores em seguidores.
+    Inclui banners visuais atraentes e trilha sonora contínua (Lofi Chill) para converter espectadores em seguidores.
     """
     if not os.path.exists(video_path):
         raise FileNotFoundError(f"Arquivo de vídeo não encontrado: {video_path}")
@@ -55,9 +56,11 @@ def stream_to_tiktok_live(
             return
         full_target = f"{rtmp_url.rstrip('/')}/{stream_key}"
 
+    has_music = music_path and os.path.exists(music_path)
     print("=" * 65)
     print("🔴 [TIKTOK LIVE 24/7] TRANSMISSOR PROFISSIONAL PRONTO")
     print(f"   Arquivo Base: {video_path}")
+    print(f"   Trilha Sonora: {music_path if has_music else 'Áudio Original / Silêncio'}")
     print(f"   Destino: {'TESTE LOCAL' if test_mode else rtmp_url}")
     print(f"   Banners de Engajamento: {'Ativados' if with_overlay else 'Desativados'}")
     print(f"   Auto-reconectar: {auto_reconnect}")
@@ -77,6 +80,26 @@ def stream_to_tiktok_live(
         "-re",                          # Taxa de quadros nativa em tempo real
         "-stream_loop", "-1",           # Loop infinito ininterrupto
         "-i", video_path,
+    ]
+
+    if has_music:
+        cmd.extend([
+            "-re",
+            "-stream_loop", "-1",
+            "-i", music_path,
+            "-map", "0:v:0",
+            "-map", "1:a:0",
+        ])
+    else:
+        # Garante geração de áudio silencioso estéreo caso o vídeo não tenha áudio
+        cmd.extend([
+            "-f", "lavfi",
+            "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+            "-map", "0:v:0",
+            "-map", "1:a:0",
+        ])
+
+    cmd.extend([
         "-vf", vf_chain,
         "-c:v", "libx264",
         "-preset", "veryfast",
@@ -89,7 +112,7 @@ def stream_to_tiktok_live(
         "-b:a", "128k",
         "-ar", "44100",
         "-f", "flv"
-    ]
+    ])
 
     if test_mode:
         cmd.extend(["-t", "5", full_target])
@@ -136,6 +159,7 @@ if __name__ == "__main__":
     parser.add_argument("--video", default="assets/roblox_bg.mp4", help="Caminho do vídeo para transmitir em loop")
     parser.add_argument("--rtmp", default=DEFAULT_RTMP_URL, help="URL RTMP do TikTok")
     parser.add_argument("--key", default=DEFAULT_STREAM_KEY, help="Chave de transmissão")
+    parser.add_argument("--music", default="assets/lofi_bg.mp3", help="Caminho da trilha sonora Lofi para a Live")
     parser.add_argument("--test", action="store_true", help="Executa um teste local de 5s para validar o pipeline")
     parser.add_argument("--no-overlay", action="store_true", help="Desativa os banners de follow na tela")
 
@@ -144,6 +168,7 @@ if __name__ == "__main__":
         video_path=args.video,
         rtmp_url=args.rtmp,
         stream_key=args.key,
+        music_path=args.music,
         with_overlay=not args.no_overlay,
         test_mode=args.test
     )
