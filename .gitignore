@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Environment Variables
+.env
+
+# Media binaries (Videos and temporary audio)
+temp/
+output/
+assets/*.mp4
+assets/*.mkv
+test_*.mp4
+test_*.mp3
+test_*.ass
+
+# System files
+.DS_Store
+Thumbs.db

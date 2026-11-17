@@ -1,0 +1,4 @@
+edge-tts>=6.1.10
+yt-dlp>=2026.10.0
+python-dotenv>=1.0.0
+requests>=2.31.0
