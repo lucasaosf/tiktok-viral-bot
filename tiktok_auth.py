@@ -58,6 +58,14 @@ def connect_tiktok_account():
 
         while time.time() - start_time < timeout_seconds:
             try:
+                if len(context.pages) == 0 or context.pages[0].is_closed():
+                    # Usuário fechou a janela do Chrome
+                    cookies = context.cookies()
+                    cookie_names = [c["name"] for c in cookies]
+                    if any(k in cookie_names for k in ["sessionid", "sid_tt", "sessionid_ss"]):
+                        logged_in = True
+                    break
+
                 cookies = context.cookies()
                 cookie_names = [c["name"] for c in cookies]
                 
@@ -66,7 +74,7 @@ def connect_tiktok_account():
                 current_url = page.url.lower()
                 not_on_login = "/login" not in current_url and "tiktok.com" in current_url
 
-                if is_auth_cookie or (not_on_login and "tiktok.com" in current_url and len(cookie_names) > 8):
+                if is_auth_cookie or (not_on_login and len(cookie_names) > 8):
                     logged_in = True
                     # Salva backup dos cookies em JSON
                     cookies_backup = os.path.join(SESSION_DIR, "cookies.json")
