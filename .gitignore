@@ -5,8 +5,11 @@ __pycache__/
 .venv/
 venv/
 
-# Environment Variables
+# Environment Variables & Authentication Sessions
 .env
+tiktok_session/
+cookies.json
+*.session
 
 # Media binaries (Videos and temporary audio)
 temp/

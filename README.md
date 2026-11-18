@@ -1,70 +1,74 @@
-# 🎬 TikTok Viral Automation — US & Europe (Dark Channel & Live 24/7)
+# 🎬 TikTok Viral Automation — US & Europe (Dark Channel, Auto-Upload & Live 24/7)
 
-Sistema automatizado em Python para criação em massa de **vídeos virais (Shorts/TikTok)** e **transmissão contínua de Lives 24/7 de Roblox** com foco em monetização em **Dólar (USD)** nos **Estados Unidos e Europa**.
+Sistema profissional em Python para criação em massa de **vídeos virais (Shorts/TikTok)**, **publicação 100% automatizada com tecnologia anti-detecção (Stealth)** e **transmissão contínua de Lives 24/7 de Roblox** com foco em monetização em **Dólar (USD)** nos **Estados Unidos e Europa**.
 
 ---
 
 ## 🚀 Como Funciona o Sistema
 
-O robô automatiza o pipeline completo de produção de conteúdo *Faceless* (sem mostrar o rosto) em alta definição:
+O robô automatiza o ciclo completo de crescimento no TikTok:
 
 1. **Roteiros Virais em Inglês (`story_generator.py`):**
-   - Cria histórias com ganchos fortes nos primeiros 3 segundos (*hooks*) para máxima retenção.
-   - Textos calculados para durar **mais de 60 segundos** (requisito obrigatório para monetização do *TikTok Creator Rewards Program*).
+   - Histórias com ganchos fortes nos primeiros 3 segundos (*hooks*) para máxima retenção.
+   - Textos calculados para durar **mais de 60 segundos** (requisito obrigatório para o *TikTok Creator Rewards Program*).
 
 2. **Voz Neural Americana (`voice_engine.py`):**
-   - Gera narração natural e cinematográfica usando a voz oficial do TikTok gringo (`en-US-ChristopherNeural` da Microsoft Edge-TTS).
-   - Calcula os milissegundos exatos de cada palavra para sincronização labial e legendagem.
+   - Narração natural e cinematográfica usando a voz oficial do TikTok gringo (`en-US-ChristopherNeural` da Microsoft Edge-TTS).
+   - Milissegundos exatos mapeados para sincronização labial e legendagem.
 
 3. **Legendas Dinâmicas Coloridas (`subtitle_engine.py`):**
-   - Gera legendas no padrão *pop-up* (amarelo e branco com contorno preto grosso) no formato `.ass`.
-   - Posicionamento no terço superior-médio da tela para não cobrir nem ser coberto pela interface do TikTok (botões de like/comentário e descrição).
+   - Legendas no padrão *pop-up* (amarelo neon e branco com contorno preto) no formato `.ass`.
+   - Posicionamento no terço superior para não conflitar com a interface do TikTok.
 
 4. **Renderização Vertical 9:16 (`video_engine.py`):**
-   - Compila gameplay satisfatória de Roblox em **1080x1920 a 60 FPS**.
-   - Corta o vídeo no tempo exato do áudio com padding suave.
+   - Compila gameplay de Roblox em **1080x1920 a 60 FPS**.
 
-5. **Transmissão Contínua de Live 24/7 (`live_streamer.py`):**
-   - Transmite um loop ininterrupto de gameplays de Roblox para o TikTok Live via protocolo RTMP.
-   - Permite receber presentes de live (Coins/Diamonds) convertíveis em dólares.
+5. **Conexão Segura & Postagem Automática (`tiktok_auth.py` e `tiktok_uploader_stealth.py`):**
+   - Usa o executável oficial do Google Chrome com perfil persistente (`tiktok_session/`).
+   - Tecnologia **Playwright Stealth** que mascara `navigator.webdriver = false`.
+   - Digitação e navegação com variações de velocidade humana para **risco zero** de ban ou shadowban.
+
+6. **Transmissão Contínua de Live 24/7 (`live_streamer.py`):**
+   - Transmite Roblox ininterruptamente com trilha sonora Lofi e banners de engajamento (*Follow for Good Luck*).
+   - Reconexão automática em caso de oscilação de rede.
 
 ---
 
-## 📦 Instalação
+## 📦 Instalação Rápida
 
-### 1. Pré-requisitos
-* Python 3.10 ou superior
-* FFmpeg instalado no sistema
-
-### 2. Instalar dependências
 ```bash
 pip install -r requirements.txt
+playwright install chromium
 ```
 
 ---
 
-## 🎯 Modos de Uso
+## 🎯 Como Usar no Dia a Dia (Arquivos .BAT com 1 Clique)
 
-### A. Gerar 1 vídeo viral completo:
-```bash
-python main.py --generate
-```
-O vídeo pronto em 1080x1920 será salvo na pasta `output/` junto com um arquivo de texto contendo o título, gancho e hashtags otimizadas.
+### 1. Conectar a sua Conta (Passo Único):
+Dê dois cliques em **`conectar_conta.bat`**.
+- O Google Chrome oficial abrirá na página do TikTok.
+- Faça login na sua conta (`@lucas.aosf`) via QR Code ou senha.
+- Sua sessão ficará salva permanentemente em `tiktok_session/` (o robô nunca mais pedirá senha).
 
-### B. Gerar múltiplos vídeos em lote (Batch):
-```bash
-python main.py --count 3
-```
+### 2. Gerar Vídeos em Lote:
+Dê dois cliques em **`gerar_videos.bat`**.
+- Digite a quantidade de vídeos desejada (ex: 3).
+- Os vídeos de >60s serão renderizados em `output/` com suas legendas e hashtags.
 
-### C. Iniciar Transmissão de Live 24/7 no TikTok:
-Preencha a URL e a Chave no `.env` (ou passe via linha de comando):
-```bash
-python main.py --live
-```
+### 3. Publicar Automaticamente no TikTok:
+Dê dois cliques em **`publicar_automatico.bat`**.
+- **Opção 1:** O robô abre o Creator Center, faz upload do vídeo mais recente, digita a legenda/hashtags e publica sozinho.
+- **Opção 2:** Modo revisão (carrega tudo na tela para você conferir antes de postar).
+
+### 4. Iniciar a Live 24/7:
+Dê dois cliques em **`iniciar_live.bat`**.
+- **Opção 1:** Inicia a transmissão ao vivo (requer Stream Key no `.env`).
+- **Opção 2:** Faz um teste local de 5 segundos.
 
 ---
 
-## 🇺🇸 Dicas para o TikTok Entregar nos EUA e Europa
-1. **Hospedagem nos EUA:** Ao rodar na nuvem (VPS, Render ou Oracle Cloud), escolha servidores localizados nos Estados Unidos (ex: Ohio, Virgínia, Oregon).
-2. **Metadados em Inglês:** Todas as legendas, títulos e hashtags geradas pelo bot já são 100% calibradas para o público norte-americano.
-3. **Horários de Postagem:** Os melhores horários para o fuso horário americano (EST/PST) são entre 14:00 e 19:00 (horário de Brasília).
+## 🇺🇸 Estratégia de Crescimento (EUA & Europa)
+- **Frequência:** 3 vídeos por dia (14:00, 17:00 e 21:00 horário de Brasília — horários nobres nos EUA).
+- **Meta:** Atingir 1.000 seguidores para desbloquear a chave de Live RTMP e link na bio.
+- **Monetização:** RPM de $0.80 a $2.50+ USD por mil views após qualificação.
